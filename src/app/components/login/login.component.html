@@ -1,0 +1,33 @@
+
+  
+  <div class="login-container p-4 surface-card shadow-2 border-round">
+  
+    <div class="login-content">
+
+        <h1 class="login-header">Login</h1>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="p-fluid  login-form-content ">
+            <!-- Username Input -->
+            <div class="field">
+              <label for="username">Username</label>
+              <input id="username" type="text" pInputText formControlName="username" class="p-inputtext-sm" />
+            </div>
+        
+            <!-- Role Selection -->
+            <div class="field">
+              <label for="role">Select Role</label>
+              <p-dropdown 
+                id="role" 
+                formControlName="role" 
+                [options]="roles" 
+                optionLabel="label"
+                placeholder="Select a Role">
+              </p-dropdown>
+            </div>
+        
+            <!-- Submit Button -->
+            <p-button type="submit" label="Login" [disabled]="loginForm.invalid" class="p-mt-3"></p-button>
+          </form>
+    </div>
+  </div>
+  

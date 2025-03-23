@@ -1,0 +1,116 @@
+
+  <div>
+    <div>
+        <h3>Available Fields</h3>
+        <div *ngFor="let field of availableFields"  pDraggable 
+        (onDragStart)="dragStart(field)" 
+        (onDragEnd)="dragEnd()">
+          {{ field.label }}
+        </div>
+    </div>
+
+    <div style="width: 500px; height: 500px; background-color: blanchedalmond;" pDroppable  (onDrop)="drop()">
+        <h3>Drop</h3>
+
+        <!-- <div *ngFor="let field of formFields">
+            {{ field.label }}
+            <button (click)="removeField(field.key)">❌</button>
+        </div> -->
+
+        <form [formGroup]="form" (ngSubmit)="submitForm()">
+            <div *ngFor="let field of formFields" class="form-group">
+              
+              <!-- Text Input -->
+              <div *ngIf="field.type === 'text'">
+                <label>{{ field.label }}</label>
+                <input type="text" pInputText [formControlName]="field.key" [value]="field.value"  [placeholder]="field.placeHolder ? field.placeHolder : ''">
+                <small  *ngIf="field.helperText">
+                  {{field.helperText}}
+                </small>
+                <small *ngIf="form.get(field.key)?.invalid && submitted">
+                  {{ field.label }} is required!
+                </small>
+              </div>
+          
+              <!-- Textarea -->
+              <div *ngIf="field.type === 'textarea'">
+                <label>{{ field.label }}</label>
+                <textarea pInputTextarea [formControlName]="field.key"  [placeholder]="field.placeHolder ? field.placeHolder : ''"></textarea>
+                <small  *ngIf="field.helperText">
+                  {{field.helperText}}
+                </small>
+                <small *ngIf="form.get(field.key)?.invalid && submitted">
+                  {{ field.label }} is required!
+                </small>
+              </div>
+          
+              <!-- Dropdown -->
+              <div *ngIf="field.type === 'select'">
+                <label>{{ field.label }}</label>
+                <p-dropdown [options]="field.options" [formControlName]="field.key" [placeholder]="field.placeHolder ? field.placeHolder : ''"></p-dropdown>
+              
+                <small  *ngIf="field.helperText">
+                  {{field.helperText}}
+                </small>
+                <small *ngIf="form.get(field.key)?.invalid && submitted">
+                  {{ field.label }} is required!
+                </small>
+              </div>
+          
+              <!-- Checkbox Group -->
+              <div *ngIf="field.type === 'checkbox'">
+                <label>{{ field.label }}</label>
+                <p-checkbox *ngFor="let option of field.options" [label]="option.label" [value]="option.value"  [formControlName]="field.key"></p-checkbox>
+              </div>
+
+              <!-- [label]="option.label" [value]="option.value"
+              [label]="option.label" [value]="option.value" -->
+
+              <!-- Radio Button Group -->
+              <div *ngIf="field.type === 'radio'">
+                <label>{{ field.label }}</label>
+                <p-radioButton *ngFor="let option of field.options" [label]="option.label" [value]="option.value"  [formControlName]="field.key"></p-radioButton>
+              </div>
+          
+              <!-- Date Picker -->
+              <div *ngIf="field.type === 'date'">
+                <label>{{ field.label }}</label>
+                <p-calendar [formControlName]="field.key" [showIcon]="true" [placeholder]="field.placeHolder ? field.placeHolder : ''"></p-calendar>
+              
+                <small  *ngIf="field.helperText">
+                  {{field.helperText}}
+                </small>
+                <small *ngIf="form.get(field.key)?.invalid && submitted">
+                  {{ field.label }} is required!
+                </small>
+              </div>
+          
+            </div>
+            
+            <button type="submit" pButton label="Submit"></button>
+            <br>
+            <p-button label="Clear" (onClick)="this.formFields=[]" />
+
+          </form>
+    </div>
+
+    <p-dialog header="Update your Information" [modal]="true" [(visible)]="formDetailsVisible" [style]="{ width: '25rem' }">
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="Label" class="font-semibold w-6rem">Update Label</label>
+            <input pInputText id="Label" class="flex-auto ng-invalid ng-dirty" autocomplete="off" [(ngModel)]="updatedLabel" />
+        </div>
+        <div class="flex align-items-center gap-3 mb-5">
+            <label for="email" class="font-semibold w-6rem">Place Holder</label>
+            <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="updatedPlaceHolder" />
+        </div>
+        <div class="flex align-items-center gap-3 mb-5">
+            <label for="email" class="font-semibold w-6rem">Helper Text</label>
+            <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="updatedHelperText" />
+        </div>
+
+        <div class="flex justify-content-end gap-2">
+            <p-button label="Cancel" severity="secondary" (onClick)="formDetailsCancel()" />
+            <p-button label="Save" (onClick)="formDetailsSubmit()" />
+        </div>
+    </p-dialog>
+  </div>

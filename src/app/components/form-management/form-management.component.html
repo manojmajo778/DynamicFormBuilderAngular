@@ -1,0 +1,48 @@
+<div class="FormManagementComponentContainer">
+    <div class="header-container">
+        <h1>Manoj</h1>
+        <p>role</p>
+    </div>
+
+    <div class="body-container">
+
+        <h2>No of Forms</h2>
+
+        <div>
+
+            <button (click)="add()" >add</button>
+
+
+            <p-table [value]="tableData" [paginator]="true" [rows]="2" [responsiveLayout]="'scroll'">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th *ngFor="let col of columns">{{ col.header }}</th>
+
+                        <th *ngIf="isAdmin"></th>
+                        <th *ngIf="!isAdmin"></th>
+                        <th *ngIf="isAdmin"></th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-index let-rowIndex="rowIndex" >
+                    <tr>
+                        <td *ngFor="let col of columns">{{ rowData[col.field] ? col.field != 'id' ?  rowData[col.field] : rowIndex + 1 : '--' }}</td>
+
+                        <td *ngIf="isAdmin">
+                            <p-button label="Edit"  (onClick)="formEdit(rowData)" />
+
+                        </td>
+                        <td *ngIf="!isAdmin">
+                            <p-button label="View"  (onClick)="formView(rowData)" />
+
+                        </td>
+                        <td *ngIf="isAdmin">
+                            <p-button label="Delete"  severity="danger" (onClick)="deleteRow(rowData)" />
+                        </td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

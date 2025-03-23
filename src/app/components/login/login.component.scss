@@ -1,0 +1,40 @@
+::ng-deep .login-container{
+    background-image: url("/assets/Blurred_wooden_window.png");
+    background-size: cover;
+    width: 100%;
+    height: calc(100vh - 16px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .login-content{
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        width: 100%;
+        max-width: 480px;
+        padding-inline: 16px;
+        align-items: center;
+
+        .login-header{
+            margin: 0px;
+        }
+
+        .login-form-content{
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+        }
+
+        label{
+            font-weight: 700;
+            font-size: large;
+        }
+    }
+
+
+
+
+}

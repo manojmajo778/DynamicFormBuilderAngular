@@ -1,0 +1,16 @@
+::ng-deep .FormManagementComponentContainer{
+    width: 100%;
+    max-width: 910px;
+    margin: 0px auto;
+    padding: 16px;
+    .header-container{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .body-container{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
