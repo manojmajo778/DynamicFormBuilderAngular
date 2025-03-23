@@ -1,19 +1,24 @@
-<div class="FormManagementComponentContainer">
+<div class="FormManagementComponentContainer" *ngIf="logInDetails">
     <div class="header-container">
-        <h1>Manoj</h1>
-        <p>role</p>
+        <div class="section1">
+            <h1 style="margin: 0px;">{{logInDetails.name}}</h1>
+            <p style="margin: 0px;">{{logInDetails.role}}</p>
+        </div>
+
+        <div class="section2">
+            <p-button label="Add Form" *ngIf="isAdmin && (tableData && tableData.length > 0)" (onClick)="add()" />
+            <p-button label="LogOut"  severity="secondary" (onClick)="LogOut()" />
+
+        </div>
     </div>
 
     <div class="body-container">
 
-        <h2>No of Forms</h2>
+        <h2 style="margin: 0px;">No of Forms - {{isAdmin ? (tableData && tableData.length) : UserData().length}}</h2>
 
-        <div>
+        <div style="height:100%;" *ngIf="isAdmin ? (tableData && tableData.length > 0) : UserData().length > 0">
 
-            <button (click)="add()" >add</button>
-
-
-            <p-table [value]="tableData" [paginator]="true" [rows]="2" [responsiveLayout]="'scroll'">
+            <p-table [value]="tableData" [paginator]="true" [rows]="8" [responsiveLayout]="'scroll'">
                 <ng-template pTemplate="header">
                     <tr>
                         <th *ngFor="let col of columns">{{ col.header }}</th>
@@ -44,5 +49,23 @@
                 </ng-template>
             </p-table>
         </div>
+
+        <div *ngIf="isAdmin && !(tableData && tableData.length > 0)" style="display: flex; flex-direction: column; align-items: center; justify-content: center;height: 100%;">
+            <h1>Empty Page</h1>
+            <p-button label="Add Form" *ngIf="isAdmin && !(tableData && tableData.length > 0)" (onClick)="add()" />
+        </div>
     </div>
+
+
+    <p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="w-30rem">
+
+        <ng-template pTemplate="header">
+            <h2 class="text-xl">User View</h2>
+        </ng-template>
+
+        <div class="sideBarStyle" *ngFor="let item of myObjectView | keyvalue">
+            <strong style="width: 6rem;">{{ item.key }}:</strong>
+            <span>{{ item.value }}</span> 
+          </div>
+    </p-sidebar>
 </div>

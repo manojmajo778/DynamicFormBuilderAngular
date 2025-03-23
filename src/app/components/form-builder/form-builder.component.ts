@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MockApiService } from '../../services/mock-api.service';
 import { Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
+import { AuthService } from '../../services/auth.service';
 
 export interface FormField {
   type: string;
@@ -25,10 +26,13 @@ export interface FormField {
 })
 export class FormBuilderComponent {
 
+  isAdmin : boolean = false
+
   draggedElement : any;
   selectedElements: any[] = [];
   submitted = false;
   successMessage = '';
+  logInDetails : any = {}
 
   formDetailsVisible : boolean = false;
   updatedLabel : string = '';
@@ -40,8 +44,8 @@ export class FormBuilderComponent {
   { type: 'text', label: 'Text Input', validations: [Validators.required] },
   { type: 'textarea', label: 'Multiline Input', validations: [] },
   { type: 'select', label: 'Dropdown', options: ['Option 1', 'Option 2'], validations: [] },
-  { type: 'checkbox', label: 'Checkbox Group', options: ['Option A', 'Option B'], validations: [] },
-  { type: 'radio', label: 'Radio Buttons', options: ['Yes', 'No'], validations: [] },
+  // { type: 'checkbox', label: 'Checkbox Group', options: ['Option A', 'Option B'], validations: [] },
+  // { type: 'radio', label: 'Radio Buttons', options: ['Yes', 'No'], validations: [] },
   { type: 'date', label: 'Date Picker', validations: [] }
 ];
 
@@ -51,7 +55,7 @@ formFields: any[] = [];
 // Dynamic Reactive Form Group
 form: FormGroup;
 
-constructor(private fb: FormBuilder,private mockApi: MockApiService,private router: Router) {
+constructor(private fb: FormBuilder,private mockApi: MockApiService,private router: Router,private authService: AuthService) {
   this.form = this.fb.group({});
 }
 
@@ -63,7 +67,12 @@ ngOnInit():void{
 
     console.log( this.formFields)
   }
-  
+  this.isAdmin = this.authService.isAdmin()
+  this.logInDetails = {
+    name : localStorage.getItem('name'),
+    role : localStorage.getItem('userRole')
+  }
+
 }
 
 
@@ -176,5 +185,13 @@ console.log(updatedFormFields);
     this.router.navigate(['/form-management'])
   });
 }
+
+back(){
+  this.router.navigate(['/form-management'])
+}
+LogOut(){
+  this.authService.logout()
+}
+
 
 }

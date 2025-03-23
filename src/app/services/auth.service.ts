@@ -31,7 +31,7 @@ export class AuthService {
   logout() {
     this.currentUserRole = null;
     localStorage.removeItem('userRole');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   getUserRole(): 'Admin' | 'User' | null {

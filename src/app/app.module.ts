@@ -25,6 +25,9 @@ import { FormManagementComponent } from './components/form-management/form-manag
 
 import { TableModule } from 'primeng/table';
 
+import { SidebarModule } from 'primeng/sidebar';
+
+
 
 @NgModule({
   declarations: [AppComponent,
@@ -49,7 +52,8 @@ import { TableModule } from 'primeng/table';
     CalendarModule,
     CheckboxModule,
     RadioButtonModule,
-    TableModule
+    TableModule,
+    SidebarModule
     ],
   bootstrap: [AppComponent]
 })

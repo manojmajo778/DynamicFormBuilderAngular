@@ -17,6 +17,8 @@ export class MockApiService {
 
   submitForm(formData: any): Observable<any> {
 
+    this.isMatched = false
+
     if (!this.formSubmissions.some(existingItem => {
       JSON.stringify(existingItem) === JSON.stringify(formData)
       if(JSON.stringify(existingItem) === JSON.stringify(formData)){
@@ -24,7 +26,7 @@ export class MockApiService {
       }
     })) {
       if(this.isMatched){
-        this.formSubmissions = []
+        // this.formSubmissions = []
         this.formSubmissions.push(formData);
 
       }else{

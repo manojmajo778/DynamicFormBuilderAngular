@@ -3,14 +3,46 @@
     max-width: 910px;
     margin: 0px auto;
     padding: 16px;
+    height: calc(100vh - 90px);
+
     .header-container{
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
+
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            padding-bottom: 16px;
+            border-bottom: solid 1px black;
+            margin-bottom: 16px;
+        .section1{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .section2{
+            display: flex;
+            gap: 8px;
+        }
     }
     .body-container{
         display: flex;
         flex-direction: column;
         gap: 8px;
+        height: 100%;
+
+
+    }
+
+    .p-sidebar-right{
+        width: 30rem;
+    }
+    .sideBarStyle{
+        display: flex;
+        gap: 16px;
+    }
+
+    .p-sidebar-content{
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
     }
 }

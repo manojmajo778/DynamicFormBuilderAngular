@@ -1,116 +1,134 @@
 
-  <div>
-    <div>
-        <h3>Available Fields</h3>
-        <div *ngFor="let field of availableFields"  pDraggable 
-        (onDragStart)="dragStart(field)" 
-        (onDragEnd)="dragEnd()">
-          {{ field.label }}
-        </div>
+
+<div class="FormBuilderComponent" *ngIf="logInDetails" >
+  <div class="header-container">
+    <div class="section1">
+        <h1 style="margin: 0px;">{{logInDetails.name}}</h1>
+        <p style="margin: 0px;">{{logInDetails.role}}</p>
     </div>
 
-    <div style="width: 500px; height: 500px; background-color: blanchedalmond;" pDroppable  (onDrop)="drop()">
-        <h3>Drop</h3>
+    <div class="section2">
+        <p-button label="Back"  (onClick)="back()" />
+        <p-button label="LogOut"  severity="secondary" (onClick)="LogOut()" />
+    </div>
+  </div>
 
-        <!-- <div *ngFor="let field of formFields">
-            {{ field.label }}
-            <button (click)="removeField(field.key)">❌</button>
-        </div> -->
+  <div class="body-container">
+    <div class="part1" *ngIf="isAdmin">
+      <h3 style="margin: 0px;">Available Fields to Drag</h3>
+      <div class="part1_head">
+        <div class="part1" *ngFor="let field of availableFields"  pDraggable 
+        (onDragStart)="dragStart(field)" 
+        (onDragEnd)="dragEnd()">
+          <!-- {{ field.label }} -->
+          <p-button [label]="field.label" />
 
-        <form [formGroup]="form" (ngSubmit)="submitForm()">
-            <div *ngFor="let field of formFields" class="form-group">
+        </div>
+      </div>
+    </div>
+
+      <div class="part2"  pDroppable  (onDrop)="drop()">
+        <h3 style="margin: 0px;">Drop here...</h3>
+
+
+        <form [formGroup]="form" (ngSubmit)="submitForm()" style="display: flex; flex-direction: column; gap: 16px; align-items: center;" >
+            <div *ngFor="let field of formFields" class="form-group part2_form" >
               
               <!-- Text Input -->
-              <div *ngIf="field.type === 'text'">
+              <div *ngIf="field.type === 'text'" class="form-style">
                 <label>{{ field.label }}</label>
                 <input type="text" pInputText [formControlName]="field.key" [value]="field.value"  [placeholder]="field.placeHolder ? field.placeHolder : ''">
                 <small  *ngIf="field.helperText">
                   {{field.helperText}}
                 </small>
-                <small *ngIf="form.get(field.key)?.invalid && submitted">
+                <small style="color: red;" *ngIf="form.get(field.key)?.invalid && submitted">
                   {{ field.label }} is required!
                 </small>
               </div>
           
               <!-- Textarea -->
-              <div *ngIf="field.type === 'textarea'">
+              <div *ngIf="field.type === 'textarea'" class="form-style">
                 <label>{{ field.label }}</label>
-                <textarea pInputTextarea [formControlName]="field.key"  [placeholder]="field.placeHolder ? field.placeHolder : ''"></textarea>
+                <textarea pInputTextarea [formControlName]="field.key" [value]="field.value" [placeholder]="field.placeHolder ? field.placeHolder : ''"></textarea>
                 <small  *ngIf="field.helperText">
                   {{field.helperText}}
                 </small>
-                <small *ngIf="form.get(field.key)?.invalid && submitted">
+                <small style="color: red;" *ngIf="form.get(field.key)?.invalid && submitted">
                   {{ field.label }} is required!
                 </small>
               </div>
           
               <!-- Dropdown -->
-              <div *ngIf="field.type === 'select'">
+              <div *ngIf="field.type === 'select'" class="form-style">
                 <label>{{ field.label }}</label>
-                <p-dropdown [options]="field.options" [formControlName]="field.key" [placeholder]="field.placeHolder ? field.placeHolder : ''"></p-dropdown>
+                <p-dropdown [options]="field.options"  [formControlName]="field.key" [placeholder]="field.placeHolder ? field.placeHolder : ''"></p-dropdown>
               
                 <small  *ngIf="field.helperText">
                   {{field.helperText}}
                 </small>
-                <small *ngIf="form.get(field.key)?.invalid && submitted">
+                <small style="color: red;" *ngIf="form.get(field.key)?.invalid && submitted">
                   {{ field.label }} is required!
                 </small>
               </div>
           
               <!-- Checkbox Group -->
-              <div *ngIf="field.type === 'checkbox'">
+              <!-- <div *ngIf="field.type === 'checkbox'" class="form-style">
                 <label>{{ field.label }}</label>
                 <p-checkbox *ngFor="let option of field.options" [label]="option.label" [value]="option.value"  [formControlName]="field.key"></p-checkbox>
-              </div>
-
-              <!-- [label]="option.label" [value]="option.value"
-              [label]="option.label" [value]="option.value" -->
+              </div> -->
 
               <!-- Radio Button Group -->
-              <div *ngIf="field.type === 'radio'">
+              <!-- <div *ngIf="field.type === 'radio'" class="form-style">
                 <label>{{ field.label }}</label>
                 <p-radioButton *ngFor="let option of field.options" [label]="option.label" [value]="option.value"  [formControlName]="field.key"></p-radioButton>
-              </div>
+              </div> -->
           
               <!-- Date Picker -->
-              <div *ngIf="field.type === 'date'">
+              <div *ngIf="field.type === 'date'" class="form-style">
                 <label>{{ field.label }}</label>
-                <p-calendar [formControlName]="field.key" [showIcon]="true" [placeholder]="field.placeHolder ? field.placeHolder : ''"></p-calendar>
+                <p-calendar [formControlName]="field.key" [showIcon]="true"  [placeholder]="field.placeHolder ? field.placeHolder : ''"></p-calendar>
               
                 <small  *ngIf="field.helperText">
                   {{field.helperText}}
                 </small>
-                <small *ngIf="form.get(field.key)?.invalid && submitted">
+                <small style="color: red;" *ngIf="form.get(field.key)?.invalid && submitted">
                   {{ field.label }} is required!
                 </small>
               </div>
           
             </div>
             
-            <button type="submit" pButton label="Submit"></button>
-            <br>
-            <p-button label="Clear" (onClick)="this.formFields=[]" />
+            <div *ngIf="isAdmin" style="display: flex; gap: 16px;">
+              <button type="submit"  pButton label="Submit" [disabled]="this.formFields&&this.formFields.length < 1" ></button>
+              <p-button label="Clear" (onClick)="this.formFields=[]" />
+            </div>
 
           </form>
-    </div>
+      </div>
+  </div>
+
+
 
     <p-dialog header="Update your Information" [modal]="true" [(visible)]="formDetailsVisible" [style]="{ width: '25rem' }">
-        <div class="flex align-items-center gap-3 mb-3">
-            <label for="Label" class="font-semibold w-6rem">Update Label</label>
-            <input pInputText id="Label" class="flex-auto ng-invalid ng-dirty" autocomplete="off" [(ngModel)]="updatedLabel" />
+      <div class="UpdatePopUpContainer">
+        <div class="content flex align-items-center gap-3 mb-3 ">
+          <label for="Label" class="font-semibold w-6rem">Update Label</label>
+          <input pInputText id="Label" class="flex-auto " autocomplete="off" [(ngModel)]="updatedLabel" />
         </div>
-        <div class="flex align-items-center gap-3 mb-5">
+        <div class=" content flex align-items-center gap-3 mb-5">
             <label for="email" class="font-semibold w-6rem">Place Holder</label>
             <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="updatedPlaceHolder" />
         </div>
-        <div class="flex align-items-center gap-3 mb-5">
+        <div class="content flex align-items-center gap-3 mb-5">
             <label for="email" class="font-semibold w-6rem">Helper Text</label>
             <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="updatedHelperText" />
         </div>
 
-        <div class="flex justify-content-end gap-2">
+        <div class="footer flex justify-content-end gap-2">
             <p-button label="Cancel" severity="secondary" (onClick)="formDetailsCancel()" />
             <p-button label="Save" (onClick)="formDetailsSubmit()" />
         </div>
+      </div>
     </p-dialog>
-  </div>
+</div>
+
