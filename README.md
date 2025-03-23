@@ -1,11 +1,4 @@
-
 # Dynamic Form Builder (Angular 17 + PrimeNG 17)
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.13.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 A **fully dynamic, drag-and-drop form builder** built with **Angular 17** and **PrimeNG 17**. This project allows users to create, edit, manage, and submit custom forms with **role-based access control**.
 
